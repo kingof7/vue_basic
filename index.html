@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>뷰 기초 익히기</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{ nextYear('하이') }}
+    </div>
+    <script>
+        new Vue({ // vue 인스턴스 생성
+            el: '#app',
+            data: {
+                person: {
+                    name: '종화 코더',
+                    age: 30
+                }
+            },
+            methods: {
+                nextYear(greeting) { // 함수 줄여서 선언하기
+                    return greeting + '! ' +this.person.name + ' 는 내년에 ' + (this.person.age + 1) + '살 입니다.';
+                },
+                otherMethod: function() { // 정석대로 함수 선언하기
+                    this.nextYear();
+                }
+            }
+        })
+    </script>
+</body>
+</html>
