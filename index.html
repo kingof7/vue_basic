@@ -9,46 +9,27 @@
 </head>
 <body>
     <div id="app">
-        {{ year }}
-        <button v-on:click="plus">더하기</button>
-        <button v-on:click="minus">빼기</button>
-        <form v-on:submit.prevent="submit"> <!-- v-on : 이벤트 / v-on:click.prevent (정지) -->
-            <input type="text" v-model="text"/></br> <!-- v-model : 양방향 바인딩, data에 값을 실시간으로 변경하고 싶을 때 -->
-            <!-- <input type="text" :value="text" @keyup="updateText"/></br> -->
-            {{ text }}</br>
-            <button type="submit">Submit</button>
-        </form>
-        <form v-on:submit="search"> <!-- v-on : event -->
-            <input type="text" :value="keyword" @input="keyword = $event.target.value"/></br> <!-- @input="${data_key} = $event.target.value" >> 실시간 데이터 공유 -->
-            <button type="search">검색</button>
-        </form>
+        <button @click="changeMessage">Click</button>
+        {{ reversedMessage }}
+        {{ reversedMessage }}
+        {{ reversedMessage }}
     </div>
     <script>
-        new Vue({ // vue 인스턴스 생성
+        new Vue({ // vue 인스턴스 생성 == onload와 비슷
             el: '#app', // mount 위치
             data: {
-                year: 2018,
-                keyword: '',
-                url: 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=',
-                text: 'text'
+                message: '헬로우'
             },
-            methods: { // this에는 data : {} 값을 갖고 있음
-                plus() {
-                    this.year++;
-                },
-                minus() {
-                    this.year--;
-                },
-                submit() {
-                    alert('submitted');
-                    console.log('submitted');
-                },
-                search() {
-                    window.open(this.url+this.keyword);
-                },
-                // updateText(event) {
-                //     this.text = event.target.value;
-                // }
+            methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
+                changeMessage() {
+                    this.message = '코지코더';
+                }
+            },
+            computed: { // 복잡하고 긴 연산은 computed 안에 정의하여 사용한다. >> 함수를 캐싱한다.
+                reversedMessage() { // 속성이 생김 > 함수가 이미 계산이 되어있음 vs 함수는 매 순간 호출해야함
+                                    // this.value가 변한다면 그 값을 감지하여 다시 캐싱함
+                    return this.message.split('').reverse().join('');
+                }
             }
         })
     </script>
