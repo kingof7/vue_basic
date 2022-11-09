@@ -13,7 +13,9 @@
         <button v-on:click="plus">더하기</button>
         <button v-on:click="minus">빼기</button>
         <form v-on:submit.prevent="submit"> <!-- v-on : 이벤트 / v-on:click.prevent (정지) -->
-            <input type="text"/></br>
+            <input type="text" v-model="text"/></br> <!-- v-model : 양방향 바인딩, data에 값을 실시간으로 변경하고 싶을 때 -->
+            <!-- <input type="text" :value="text" @keyup="updateText"/></br> -->
+            {{ text }}</br>
             <button type="submit">Submit</button>
         </form>
         <form v-on:submit="search"> <!-- v-on : event -->
@@ -27,7 +29,8 @@
             data: {
                 year: 2018,
                 keyword: '',
-                url: 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='
+                url: 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query=',
+                text: 'text'
             },
             methods: { // this에는 data : {} 값을 갖고 있음
                 plus() {
@@ -42,7 +45,10 @@
                 },
                 search() {
                     window.open(this.url+this.keyword);
-                }
+                },
+                // updateText(event) {
+                //     this.text = event.target.value;
+                // }
             }
         })
     </script>
