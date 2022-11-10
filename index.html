@@ -5,13 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>뷰 기초 익히기</title>
+    <style>
+        .red {
+            color: red;
+        }
+        .font-bold {
+            font-weight: bold;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
     <div id="app">
-        {{ message }}<br>
-        <button @click="changeMessage">Click</button><br>
-        {{ updated }}
+        <div :style="{ color: red, fontSize: size }">Hi</div>
+        <div :class="{ red: isRed, 'font-bold': isBold }">Hello</div>
+        <button @click="update">Click</button>
     </div>
     <script>
         new Vue({ // vue 인스턴스 생성 == onload와 비슷
@@ -19,24 +27,17 @@
             data: {
                 message: '헬로우',
                 updated: '아니오',
+                isRed: false, // true면 20라인 class에 red가 적용
+                isBold: false,
+                red: 'red',
+                size: '30px'
             },
             methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
-                changeMessage() {
-                    this.message = '코지코더';
+                update() {
+                    this.isRed = !this.isRed;
+                    this.isBold = !this.isBold;
                 }
-            },
-            computed: { // 복잡하고 긴 연산은 computed 안에 정의하여 사용한다. >> 함수를 캐싱한다.
-                reversedMessage() { // 속성이 생김 > 함수가 이미 계산이 되어있음 vs 함수는 매 순간 호출해야함
-                                    // this.value가 변한다면 그 값을 감지하여 다시 캐싱함
-                    return this.message.split('').reverse().join('');
-                }
-            },
-            watch: { // data안에 키와 이름을 동일하게 지정, 키에 대한 값을 감시
-                message(newVal, oldVal) {
-                    console.log(newVal, oldVal);
-                    this.updated = '네';
-                }
-            }
+            },            
         })
     </script>
 </body>
