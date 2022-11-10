@@ -5,53 +5,39 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>뷰 기초 익히기</title>
-    <style>
-        .red {
-            color: red;
-        }
-        .font-bold {
-            font-weight: bold;
-        }
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
     <div id="app">
-        <p>non v-for</p>
-        <div>
-            {{ people[0].name }} {{ people[0].age }}
-        </div>
-        <div>
-            {{ people[1].name }} {{ people[1].age }}
-        </div>
-        <div>
-            {{ people[2].name }} {{ people[2].age }}
-        </div>
-        <div>
-            {{ people[3].name }} {{ people[3].age }}
-        </div>
-        <hr>
-        <p>v-for</p>
-        <!-- in 대신 of 써도 됨 / key에는 유니크한 값이나 유니크하게 바꿔서 값을 넣어줘야 함, :key="index"를 넣어주면 안좋음 데이터 1개가 지워지면 인덱스가 하나씩 밀리기 때문 -->
-        <div v-for="(person, index) in people" :key="person.id"> 
-            {{ person.name }} {{ person.age }} index : {{ index }}
-        </div>
+        {{ name }}<br>
+        <button @click="changeText">Click</button>
+    </div>
+    <div id="app-1">
+        {{ name }}<br>
+        <button @click="changeText">Click</button>
     </div>
     <script>
-        new Vue({ // vue 인스턴스 생성 == onload와 비슷
-            el: '#app', // mount 위치
+        const app = new Vue({ // vue 인스턴스 생성 == onload와 비슷
+            el: '#app', // element mount 위치
             data: {
-                people: [
-                    { id: 1, name: 'a', age: 21},
-                    { id: 2, name: 'b', age: 22},
-                    { id: 3, name: 'c', age: 23},
-                    { id: 4, name: 'd', age: 24},
-                    { id: 5, name: 'e', age: 25},
-                    { id: 6, name: 'e', age: 26},
-                ]
+                name: 'kossie'
             },
             methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
-          
+                changeText() {
+                    app1.name = 'kossie updated';
+                }
+            },            
+        })
+
+        const app1 = new Vue({
+            el: '#app-1',
+            data: {
+                name: 'kossie1'
+            },
+            methods: {
+                changeText() {
+                    app.name = 'kossie1 updated';
+                }
             },            
         })
     </script>
