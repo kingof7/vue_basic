@@ -17,25 +17,41 @@
 </head>
 <body>
     <div id="app">
-        <div :style="{ color: red, fontSize: size }">Hi</div>
-        <div :class="{ red: isRed, 'font-bold': isBold }">Hello</div>
-        <button @click="update">Click</button>
+        <!--
+            <template v-if="number === 1">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+            </template>
+            <div v-else-if="number === 2">Hi</div>
+            <div v-else>No</div>
+            <button @click="increaseNumber">Plus</button>
+            <button @click="decreaseNumber">Minus</button>
+        -->
+        <div v-show="show">Yes</div> <!-- v-if는 초기렌더링 x / v-show는 항상 초기렌더링 이후 display 옵션 먹임
+                                          자주 변한다면 v-show 사용, 그렇지 않다면 v-if -->
+        <br>
+        <button @click="toggle">Toggle</button>
     </div>
     <script>
         new Vue({ // vue 인스턴스 생성 == onload와 비슷
             el: '#app', // mount 위치
             data: {
-                message: '헬로우',
-                updated: '아니오',
-                isRed: false, // true면 20라인 class에 red가 적용
-                isBold: false,
-                red: 'red',
-                size: '30px'
+                show: false,
+                number: 0
             },
             methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
-                update() {
-                    this.isRed = !this.isRed;
-                    this.isBold = !this.isBold;
+                toggleShow() {
+                    this.show = !this.show;
+                },
+                increaseNumber() {
+                    this.number++;
+                },
+                decreaseNumber() {
+                    this.number--;
+                },
+                toggle() {
+                    this.show = !this.show;
                 }
             },            
         })
