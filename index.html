@@ -9,16 +9,16 @@
 </head>
 <body>
     <div id="app">
-        <button @click="changeMessage">Click</button>
-        {{ reversedMessage }}
-        {{ reversedMessage }}
-        {{ reversedMessage }}
+        {{ message }}<br>
+        <button @click="changeMessage">Click</button><br>
+        {{ updated }}
     </div>
     <script>
         new Vue({ // vue 인스턴스 생성 == onload와 비슷
             el: '#app', // mount 위치
             data: {
-                message: '헬로우'
+                message: '헬로우',
+                updated: '아니오',
             },
             methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
                 changeMessage() {
@@ -29,6 +29,12 @@
                 reversedMessage() { // 속성이 생김 > 함수가 이미 계산이 되어있음 vs 함수는 매 순간 호출해야함
                                     // this.value가 변한다면 그 값을 감지하여 다시 캐싱함
                     return this.message.split('').reverse().join('');
+                }
+            },
+            watch: { // data안에 키와 이름을 동일하게 지정, 키에 대한 값을 감시
+                message(newVal, oldVal) {
+                    console.log(newVal, oldVal);
+                    this.updated = '네';
                 }
             }
         })
