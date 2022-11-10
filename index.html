@@ -9,36 +9,102 @@
 </head>
 <body>
     <div id="app">
-        {{ name }}<br>
+        <!-- {{ name }}<br>
         <button @click="changeText">Click</button>
+
+        <hr> -->
+
+        <kossie-button></kossie-button>
     </div>
+    <hr><hr>
     <div id="app-1">
-        {{ name }}<br>
+        <!-- {{ name }}<br>
         <button @click="changeText">Click</button>
+
+        <hr> -->
+
+        <kossie-button></kossie-button>
     </div>
     <script>
-        const app = new Vue({ // vue 인스턴스 생성 == onload와 비슷
-            el: '#app', // element mount 위치
-            data: {
-                name: 'kossie'
+        // Vue.component('hello-world', { // 전역 컴포넌트이기 때문에 KossieButton 안에서 사용 가능
+        //     template: '<div>hello world</div>'
+        // });
+
+        // Vue.component('kossie-button', { // 전역 컴포넌트 등록 > html tag처럼 사용하면 됨 // template안에 root(부모) tag 반드시 필요 (Vue.js 2)
+        //     template: `
+        //     <div>
+        //         {{ name }}<br>
+        //         <hello-world></hello-world>
+        //         <button @click="changeText">Click</button>
+        //     </div>
+        //     `,
+        //     data() { // 이 컴포넌트를 사용하고 있는 곳에서 데이터가 일괄적으로 바뀌지 않으려면 data >> data() 함수로 정의해줘야함
+        //         return { 
+        //             name: 'kossie' // object return
+        //         }
+        //     },
+        //     methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
+        //         changeText() {
+        //             this.name = 'kossie updated';
+        //         }
+        //     },
+        // });
+
+        const HelloWorld = { // 지역 컴포넌트 2
+            template: '<div>hello world</div>'
+        }
+        
+        const KossieButton = { // 지역 컴포넌트 1
+            components: { // 지역 컴포넌트 1 안에 지역 컴포넌트 2 등록
+                'hello-world': HelloWorld
+            },
+            template: `
+            <div>
+                {{ name }}<br>
+                <hello-world></hello-world>
+                <button @click="changeText">Click</button>
+            </div>
+            `,
+            data() { // 이 컴포넌트를 사용하고 있는 곳에서 데이터가 일괄적으로 바뀌지 않으려면 data >> data() 함수로 정의해줘야함
+                return { 
+                    name: 'kossie' // object return
+                }
             },
             methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
                 changeText() {
-                    app1.name = 'kossie updated';
+                    this.name = 'kossie updated';
                 }
-            },            
+            },
+        }
+
+        const app = new Vue({ // vue 인스턴스 생성 == onload와 비슷
+            el: '#app', // element mount 위치
+            components: {
+                'kossie-button': KossieButton
+            }
+            // data: {
+            //     name: 'kossie'
+            // },
+            // methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
+            //     changeText() {
+            //         this.name = 'kossie updated';
+            //     }
+            // },            
         })
 
         const app1 = new Vue({
             el: '#app-1',
-            data: {
-                name: 'kossie1'
-            },
-            methods: {
-                changeText() {
-                    app.name = 'kossie1 updated';
-                }
-            },            
+            components: {
+                'kossie-button': KossieButton
+            }
+            // data: {
+            //     name: 'kossie1'
+            // },
+            // methods: {
+            //     changeText() {
+            //         this.name = 'kossie updated';
+            //     }
+            // },            
         })
     </script>
 </body>
