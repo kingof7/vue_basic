@@ -17,42 +17,41 @@
 </head>
 <body>
     <div id="app">
-        <!--
-            <template v-if="number === 1">
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-            </template>
-            <div v-else-if="number === 2">Hi</div>
-            <div v-else>No</div>
-            <button @click="increaseNumber">Plus</button>
-            <button @click="decreaseNumber">Minus</button>
-        -->
-        <div v-show="show">Yes</div> <!-- v-if는 초기렌더링 x / v-show는 항상 초기렌더링 이후 display 옵션 먹임
-                                          자주 변한다면 v-show 사용, 그렇지 않다면 v-if -->
-        <br>
-        <button @click="toggle">Toggle</button>
+        <p>non v-for</p>
+        <div>
+            {{ people[0].name }} {{ people[0].age }}
+        </div>
+        <div>
+            {{ people[1].name }} {{ people[1].age }}
+        </div>
+        <div>
+            {{ people[2].name }} {{ people[2].age }}
+        </div>
+        <div>
+            {{ people[3].name }} {{ people[3].age }}
+        </div>
+        <hr>
+        <p>v-for</p>
+        <!-- in 대신 of 써도 됨 / key에는 유니크한 값이나 유니크하게 바꿔서 값을 넣어줘야 함, :key="index"를 넣어주면 안좋음 데이터 1개가 지워지면 인덱스가 하나씩 밀리기 때문 -->
+        <div v-for="(person, index) in people" :key="person.id"> 
+            {{ person.name }} {{ person.age }} index : {{ index }}
+        </div>
     </div>
     <script>
         new Vue({ // vue 인스턴스 생성 == onload와 비슷
             el: '#app', // mount 위치
             data: {
-                show: false,
-                number: 0
+                people: [
+                    { id: 1, name: 'a', age: 21},
+                    { id: 2, name: 'b', age: 22},
+                    { id: 3, name: 'c', age: 23},
+                    { id: 4, name: 'd', age: 24},
+                    { id: 5, name: 'e', age: 25},
+                    { id: 6, name: 'e', age: 26},
+                ]
             },
             methods: { // this에는 data : {} 값을 갖고 있음 >> 함수를 캐싱하지 않는다.
-                toggleShow() {
-                    this.show = !this.show;
-                },
-                increaseNumber() {
-                    this.number++;
-                },
-                decreaseNumber() {
-                    this.number--;
-                },
-                toggle() {
-                    this.show = !this.show;
-                }
+          
             },            
         })
     </script>
