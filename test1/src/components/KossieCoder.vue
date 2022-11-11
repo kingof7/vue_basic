@@ -1,8 +1,10 @@
 <template>
     <div>
-        <h1>{{ title }}</h1>
-        <p>{{ name }}</p>
-        <button @click="updateName">Change Name</button>
+        <p>header</p>
+        <slot name="header" :kossie="kossie"></slot>
+        <p>Body</p>
+        <slot></slot>
+        <p>footer</p>
     </div>
 </template>
 
@@ -24,12 +26,11 @@ export default { // data, methods, computed ....
     data() {
         return {
             //name: 'Kossie Coder', > props 속성이름과 중복되면 안되서 주석처리
+            kossie: 'coder',
         }
     },    
     methods: {
-        updateName() {
-            this.name = 'Kossie Coder Updated'; // props로 지정한 값은 임의로 바꾸면 warning이 뜸 >> 항상 부모태그에서 바꿔야함 (AboutView, HomeView.vue) >> 부모로 이벤트를 보내서 부모가 직접 바꿔야함
-        }
+       
     }
 }
 </script>
